@@ -1,13 +1,38 @@
 import { Component } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
 
 @Component({
   selector: 'app-root',
-  standalone: true,
-  imports: [RouterOutlet],
   templateUrl: './app.component.html',
-  styleUrl: './app.component.css'
+  styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  title = 'spotify-app';
+  title = 'Spotify';
+
+  // Typos de datos
+  
+
+  car : CarModel = {
+    brand: "Toyota",
+    model: "Sienna",
+    year: 2013
+  }
+
+  listCars: Array<CarModel> = [
+    {
+      brand: "Ford",
+      model: "Focus",
+      year: 2020
+    },
+    {
+      brand: "Seat",
+      model: "Ibiza",
+      year: 2018
+    }
+  ];
+}
+
+interface CarModel {
+  brand: string,
+  model: string,
+  year?: number
 }
