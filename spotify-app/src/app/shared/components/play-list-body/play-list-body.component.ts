@@ -1,5 +1,4 @@
-import { Component, OnInit } from '@angular/core';
-import * as dataRaw from "../../../data/tracks.json"
+import { Component, Input, OnInit } from '@angular/core';
 import { TrackModel } from '@core/models/tracks.model';
 import { PlayListBodyStoreService } from './services/play-list-body-store.service';
 
@@ -9,16 +8,13 @@ import { PlayListBodyStoreService } from './services/play-list-body-store.servic
   styleUrls: ['./play-list-body.component.scss']
 })
 export class PlayListBodyComponent implements OnInit {
-
-  tracks: TrackModel[] =[];
+  @Input() tracks: TrackModel[] =[];
   optionsSort: { property: string | null, order: string} = {property: null, order: 'asc' }
 
   constructor(private service: PlayListBodyStoreService) {}
 
   ngOnInit(): void {
-    const { data } : any = (dataRaw as any).default;
-    this.tracks = data;
-    // this.getTracks();
+    
   }
 
   changeSort(property: string): void{

@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from '@modules/auth/services/auth.service';
 import { Subscription } from 'rxjs';
+import { CookieService } from 'ngx-cookie-service';
 
 @Component({
   selector: 'app-login-page',
@@ -13,7 +14,9 @@ export class LoginPageComponent implements OnInit {
   formLogin: FormGroup = new FormGroup({});
   errorSession: boolean = false;
   constructor(
-    private asAuthService: AuthService
+    private asAuthService: AuthService,
+    private cookie: CookieService,
+    private router: Router
   ) { }
 
   ngOnInit(): void {
@@ -33,7 +36,8 @@ export class LoginPageComponent implements OnInit {
     const { email, password } = this.formLogin.value;
     this.asAuthService.sendCredentials(email, password)
       .subscribe( response => {
-
+        this.cookie.set('token_service', response.tokenSession, 4, "/");
+        this.router.navigate(["/", 'tracks']);
       }, error => {
         this.errorSession = true;
         console.error("Las credenciales no coinciden!", error);

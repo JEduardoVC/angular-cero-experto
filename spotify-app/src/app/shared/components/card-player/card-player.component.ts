@@ -10,17 +10,12 @@ import { MultimediaService } from '@shared/services/multimedia.service';
 export class CardPlayerComponent implements OnInit{
   @Input() mode: 'small' | 'big' = 'small';
   @Input() track: TrackModel = {id: 0, name:'', album: '', url: '', cover:''};
-
   constructor(
     private multimediaService: MultimediaService
-
   ) {}
-
   ngOnInit(): void {
-
   }
-
   sendPlay(track: TrackModel): void {
-    this.multimediaService.callback.emit(track);
+    this.multimediaService.trackInfo$.next(track);
   }
 }

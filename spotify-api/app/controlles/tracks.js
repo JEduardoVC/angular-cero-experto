@@ -5,6 +5,38 @@ const URL_PUBLIC = process.env.URL_PUBLIC || '/'
 const getItems = async(req, res) => {
     try {
         const listAll = [{
+                "_id": 9,
+                "name": "I Don't Think I Love You",
+                "album": "For(N)ever",
+                "cover": "https://i.scdn.co/image/ab67616d0000b27386ef5ebdf0988990228549c6",
+                "artist": {
+                    "name": "Hoobastank",
+                    "nickname": "Hoobastank",
+                    "nationality": "US"
+                },
+                "duration": {
+                    "start": 0,
+                    "end": 333
+                },
+                "url": `${URL_PUBLIC}/I Don't Think I Love You.mp3`
+            },
+            {
+                "_id": 10,
+                "name": "My body (The Cube Guys remix)",
+                "album": "My body (The Cube Guys remix)",
+                "cover": "https://i1.sndcdn.com/artworks-000068003554-u6adac-t500x500.jpg",
+                "artist": {
+                    "name": "Marco Santoro, The Cube Guys",
+                    "nickname": "Marco Santoro, The Cube Guys",
+                    "nationality": "US"
+                },
+                "duration": {
+                    "start": 0,
+                    "end": 333
+                },
+                "url": `${URL_PUBLIC}/MARCO SANTORO - My body (The Cube Guys mix) [Official].mp3`
+            },
+            {
                 "_id": 1,
                 "name": "Getting Over",
                 "album": "One Love",

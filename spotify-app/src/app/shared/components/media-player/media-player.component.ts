@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { TrackModel } from '@core/models/tracks.model';
 import { MultimediaService } from '@shared/services/multimedia.service';
 import { Subscription } from 'rxjs';
@@ -9,24 +9,28 @@ import { Subscription } from 'rxjs';
   styleUrls: ['./media-player.component.scss']
 })
 export class MediaPlayerComponent implements OnInit, OnDestroy {
-  mockCover: TrackModel = {
-    name:'Demon Slayer',
-    album:'Kimetsu no Yaiba',
-    url: '',
-    cover: 'https://imgsrv.crunchyroll.com/cdn-cgi/image/fit=contain,format=auto,quality=85,width=480,height=720/catalog/crunchyroll/765ee047befcfb677d169f5de4c82d5c.jpg',
-    id: 1
-  }
-
+  @ViewChild("progressBar") pogressBar: ElementRef = new ElementRef("");
+  mockCover!: TrackModel;
   listObservers$: Array<Subscription> = [];
+  state: boolean = false;
 
-  constructor(private multimediaService: MultimediaService) {}
+  constructor(public multimediaService: MultimediaService) {}
 
   ngOnDestroy(): void {
     this.listObservers$.forEach(u => u.unsubscribe());
   }
 
+  handlePosition(event: MouseEvent): void {
+    const elNative: HTMLElement = this.pogressBar.nativeElement;
+    const { clientX,  } = event;
+    const { x, width } = elNative.getBoundingClientRect();
+    const clickX = clientX - x;
+    const percentageFromX = (clickX * 100) / width;
+    this.multimediaService.seekAudio(percentageFromX);
+  }
+
   ngOnInit(): void {
-    const observer$: Subscription = this.multimediaService.callback.subscribe((response: TrackModel) => {})
-    this.listObservers$ = [observer$];
+    const observer1$ = this.multimediaService.playerStatus$.subscribe(status => this.state = status)
+    this.listObservers$ = [observer1$]
   }
 }
